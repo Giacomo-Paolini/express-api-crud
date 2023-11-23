@@ -15,7 +15,19 @@ async function index(req, res) {
 }
 
 async function store(req, res) {
+    const data = req.body;
+    console.log(data);
+    const newPost = await prisma.post.create({
+        data: {
+            title: data.title,
+            slug: data.slug,
+            image: data.image,
+            content: data.content,
+            published: data.published,
+        }
+    })
 
+    return res.json(newPost);
 }
 
 async function show(req, res) {

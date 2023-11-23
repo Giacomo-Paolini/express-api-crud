@@ -8,9 +8,10 @@ const host = process.env.HOST || 'localhost';
 
 dotenv.config();
 
+app.use(express.json());
+
 app.use('/', postsRouter);
 
-app.use(express.json());
 
 app.listen(port, host, () => {
     console.log(`Server running at http://${host}:${port}/`);
