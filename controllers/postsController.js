@@ -2,7 +2,14 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 async function index(req, res) {
-    const posts = await prisma.post.findMany();
+    const posts = await prisma.post.findMany({
+        where: {
+            published: true,
+            slug: {
+                startsWith: 'tutorial'
+            }
+        },
+    });
 
     return res.json(posts);
 }
