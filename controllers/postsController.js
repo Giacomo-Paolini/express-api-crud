@@ -31,11 +31,39 @@ async function store(req, res) {
 }
 
 async function show(req, res) {
+    const slug = req.params.slug;
+    const showPost = await prisma.post.findUnique({
+        where: {
+            slug: String(slug)
+        }
+    })
 
+    return res.json(showPost);
 }
 
 async function update(req, res) {
+    const slug = req.params.slug;
+    const data = req.body;
+    console.log(data)
 
+    const post = await prisma.post.findUnique({
+        where: {
+            slug: String(slug)
+        }
+    })
+
+    if (!post) {
+        throw new Error('oh nooo')
+    }
+
+    const postUpdate = await prisma.post.update({
+        data: data,
+        where: {
+            slug: String(slug),
+        },
+    })
+
+    return res.json(postUpdate);
 }
 
 async function destroy(req, res) {
