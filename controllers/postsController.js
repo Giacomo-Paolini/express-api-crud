@@ -67,7 +67,18 @@ async function update(req, res) {
 }
 
 async function destroy(req, res) {
+    const slug = req.params.slug;
+    const postDelete = await prisma.post.delete({
+        where: {
+            slug: String(slug),
+        },
 
+    })
+    if (!postDelete) {
+        throw new Error('omggg')
+    }
+
+    return res.json('deleted post');
 }
 
 module.exports = {
